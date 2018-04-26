@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+/*import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getDateTime() {
+    DateFormat df = new SimpleDateFormat("yyyyMMdd");
+    return df.format(new Date());
+}*/
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'mmiSigned'
+            keyPassword 'a12312312'
+            storeFile file('/home/qiang/debug/TclMMI/Tpplication/mmiSigned.jks')
+            storePassword 'a12312312'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "com.cydroid.tpicture"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 80100010
+        versionName "8.1.0.ab"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            moduleName "sharpness-jni"
+        }
+    }
+    sourceSets.main {
+        jni.srcDirs = [] // This prevents the auto generation of Android.mk
+        jniLibs.srcDir 'src/main/libs'
+        // This is not necessary unless you have precompiled libraries in your project.
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+
+        /* applicationVariants.all { variant ->
+              variant.outputs.each { output ->
+                  output.outputFileName = new File("SharpnessDemo_" + defaultConfig.versionName + "_" + getDateTime() + ".apk")
+              }
+          }*/
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+            debuggable true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
