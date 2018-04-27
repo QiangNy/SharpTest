@@ -1,5 +1,6 @@
 package com.cydroid.tpicture;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.cydroid.tpicture.service.PictureService;
 import com.cydroid.tpicture.utils.BigUtil;
 import com.cydroid.tpicture.utils.DswLog;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by qiang on 4/12/18.
@@ -26,12 +30,31 @@ public class BaseActivity  extends AppCompatActivity {
             if (intent.getAction().equals(BigUtil.BROAD_START_TEST)) {
                 getIntentAciton(intent);
             }else if (intent.getAction().equals(BigUtil.BROAD_STOP_TEST)) {
+                closeCamera();
                 finish();
             } /*else if (intent.getAction().equals(BigUtil.BROAD_STAT_WHITETEST)) {
                 getIntentAciton(intent);
             }*/
         }
     };
+
+    private void closeCamera() {
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        DswLog.d(TAG, "kill camera app");
+        Method forceStopPackage = null;
+        try {
+            forceStopPackage = activityManager.getClass().getDeclaredMethod("forceStopPackage", String.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assert forceStopPackage != null;
+        forceStopPackage.setAccessible(true);
+        try {
+            forceStopPackage.invoke(activityManager, "com.android.camera");
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onStart() {

@@ -339,10 +339,10 @@ public class BackAsyncTask extends AsyncTask {
         //take picture
 
         DswLog.d(TAG, "#### 2");
-        if (action.equals(OPEN_CAMERA_ONE) || action.equals(OPEN_CAMERA_TWO) ){
-            SystemClock.sleep(1500);
+        if (action.equals(OPEN_CAMERA_ONE) || action.equals(OPEN_CAMERA_TWO)) {
+            SystemClock.sleep(2100);
         }else {
-            SystemClock.sleep(500);
+            SystemClock.sleep(1500);
         }
 
         excuteEventAciton(KeyEvent.KEYCODE_CAMERA);
@@ -357,8 +357,6 @@ public class BackAsyncTask extends AsyncTask {
         if (!isWhite)
             calculatePicture(action,Path);
         DswLog.d(TAG, "#### 5");
-      //  excuteEventAciton(KeyEvent.KEYCODE_BACK);
-        DswLog.d(TAG, "#### 6");
     }
 
     private void excuteEventAciton(int keyevent) {

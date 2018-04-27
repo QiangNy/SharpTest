@@ -37,7 +37,7 @@ public class CSW1703 {
 
     public static final int mCameraIDs[] = { 1, 3};
     public static final float threshold = 0.5f;
-    public static final int backRelexLine_15 = 1800;
+    public static final int backRelexLine_15 = 1750;
     public static final int backRelexLine_19 = 2200;
     public static final int frontRelexLine_15 = 1100;
     public static final int frontRelexLine_19 = 1400;
